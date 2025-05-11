@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Poker Sans Cartes</title>
+  <link rel="icon" href="data:,">
+
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .player-action { margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
+    .actions button, .actions input { margin: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Mini Poker - Tour de Mise</h1>
+  	<p id="infos"></p>
+  	<p id="MAIN_POT"></p>
+  	<div id="ensembleJoueurs"></div>
+	<div id="playForm"></div>
+	<div id="river"></div>
+	
+  <!-- Lien vers le fichier JavaScript externe -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>
