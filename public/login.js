@@ -6,6 +6,7 @@ const socket = io();
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = input.value.trim();
+    console.log(`envoie du nom ${name} au serveur pour creer un joueur`)
     socket.emit("verifierNom", name);
   });
 
