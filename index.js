@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
     if (name == null) {
       socket.emit("erreurNom", "Nom invalide ou déjà utilisé.");
     } else {
-      const newPlayer = new Joueur("name")
+      const newPlayer = new Player("name")
       const url = `/game/${newPlayer.id}`;
       socket.emit("nomValide", url);
     }
