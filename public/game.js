@@ -1,5 +1,3 @@
-const socket = io(); // Si les fichiers sont sur le même domaine
-
 // Émettre un message
 socket.emit("message", "Bonjour serveur !");
 
