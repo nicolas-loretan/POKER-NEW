@@ -12,10 +12,11 @@ function getIdFromURL() {
 }
 
 // Lorsque le serveur envoie une demande d'url
-socket.on("demanderUrl" => {
-            const url = window.location.pathname;
-            socket.emit("reponseUrl", url);
-        });
+socket.on("demanderUrl", () => {
+    const url = window.location.pathname;
+    socket.emit("reponseUrl", url);
+});
+
 
 
 
