@@ -28,6 +28,11 @@ app.get('/game', (req, res) => {
   console.log("Client connecté à la page game");
 });
 
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  console.log("Client connecté à la page login");
+});
+
 app.get('/', (req, res) => {
   res.redirect('/accueil');
 });
