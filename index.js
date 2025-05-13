@@ -96,6 +96,7 @@ let playerByIdP = {} // id public
 
 class Player {
     constructor(name, stack = 100) {
+	this.socketid = null;
         this.name = name;
 	      this.hand = [];
         this.stack = stack;
