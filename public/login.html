@@ -13,14 +13,36 @@
 	
 	
 	<main>
-		<form id="connectionForm">
-		  <input type="text" id="connectionInput" placeholder="Entrez votre pseudo" required>
-		  <button type="submit">Se connecter</button>
-		</form>
+		<!-- index.html -->
+<form id="startForm">
+  <input type="text" id="playerName" placeholder="Entrez votre nom" required>
+  <button type="submit">Se connecter</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  const form = document.getElementById('startForm');
+  const input = document.getElementById('playerName');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = input.value.trim();
+    socket.emit("verifierNom", name);
+  });
+
+  socket.on("nomValide", (url) => {
+    window.location.href = url; // redirection vers page personnalisée
+  });
+
+  socket.on("erreurNom", (message) => {
+    alert(message); // affiche erreur si nom invalide
+  });
+</script>
+
 	</main>
 	
-	  <!-- Lien vers le fichier JavaScript externe -->
-	  <script src="/socket.io/socket.io.js"></script>
 	  <script src="game.js"></script>
 </body>
 	
