@@ -14,9 +14,6 @@ const io = new Server(server, {
   }
 });
 
-// Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, "public")));
-
 // Routes
 app.get('/accueil', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'accueil.html'));
@@ -55,6 +52,10 @@ app.use((req, res) => {
   res.status(404).send('Erreur 404 : Page non trouvée');
   console.log(`Requête non reconnue : ${req.originalUrl}`);
 });
+
+
+// Servir les fichiers statiques
+app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
   console.log("✅ Un client s'est connecté au socket :", socket.id);
