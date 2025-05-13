@@ -28,9 +28,9 @@ app.get('/game/:id', (req, res) => {
   console.log(id)
   if (id in playerById){
 	res.sendFile(path.join(__dirname, 'public', 'game.html'));
-  	console.log(`Client ${playerById[id].name} connecté à la page game`);
+  	console.log(`Client ${playerById[id].name} se connecte à la page game`);
   } else {res.status(404).send('Erreur 404 : Page non trouvée');
-  console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${req.originalUrl}`);
+  console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${id}`);
   console.log(`bib playerById : `)
 // Boucle pour afficher chaque clé et son objet associé
 for (let key in playerById) {
