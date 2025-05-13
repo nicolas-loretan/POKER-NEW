@@ -24,6 +24,7 @@ app.get('/accueil', (req, res) => {
 });
 
 app.get('/game/:id', (req, res) => {
+  const id = req.params.id;
   if (id in playerById){
 	res.sendFile(path.join(__dirname, 'public', 'game.html'));
   	console.log(`Client ${playerById[id].name} connecté à la page game`);
@@ -57,7 +58,7 @@ io.on("connection", (socket) => {
     if (name == null) {
       socket.emit("erreurNom", "Nom invalide ou déjà utilisé.");
     } else {
-      const newPlayer = new Player("name")
+      const newPlayer = new Player(name)
       const url = `/game/${newPlayer.id}`;
       socket.emit("nomValide", url);
     }
