@@ -17,7 +17,25 @@ const io = new Server(server, {
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, "public")));
 
+// Routes
+app.get('/accueil', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'accueil.html'));
+  console.log("Client connecté à la page accueil");
+});
 
+app.get('/game', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'game.html'));
+  console.log("Client connecté à la page game");
+});
+
+app.get('/', (req, res) => {
+  res.redirect('/accueil');
+});
+
+app.use((req, res) => {
+  res.status(404).send('Erreur 404 : Page non trouvée');
+  console.log(`Requête non reconnue : ${req.originalUrl}`);
+});
 
 io.on("connection", (socket) => {
   console.log("✅ Un client s'est connecté :", socket.id);
