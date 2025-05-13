@@ -1,5 +1,3 @@
-const socket = io();
-
   const form = document.getElementById('startForm');
   const input = document.getElementById('playerName');
 
