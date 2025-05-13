@@ -91,7 +91,7 @@ console.log(`bib playerById : `)
 for (let key in playerById) {
     if (playerById.hasOwnProperty(key)) {
         console.log(`${key}: `, playerById[key]);
-    		}}}});
+    		}}
   });
 	
   socket.on("message", (data) => {
