@@ -29,7 +29,9 @@ app.get('/game/:id', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'game.html'));
   	console.log(`Client ${playerById[id].name} connecté à la page game`);
   } else {res.status(404).send('Erreur 404 : Page non trouvée');
-  console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${req.originalUrl}`);}
+  console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${req.originalUrl}`);
+  console.log(`bib playerById : ${playerById}`)
+	 }
 });
 
 app.get('/login', (req, res) => {
