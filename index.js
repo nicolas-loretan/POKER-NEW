@@ -9,7 +9,7 @@ const server = http.createServer(app);
 // Important : CORS configuration pour accepter les connexions front-end
 const io = new Server(server, {
   cors: {
-    origin: "/public/game.js", // Remplace '*' par l’URL de ton front pour plus de sécurité
+    origin: "*", // Remplace '*' par l’URL de ton front pour plus de sécurité
     methods: ["GET", "POST"]
   }
 });
