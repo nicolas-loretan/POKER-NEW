@@ -1,3 +1,8 @@
+function getIdFromURL() {
+  const path = window.location.pathname;
+  return path.split("/").pop();
+}
+
 // Émettre un message
 socket.emit("message", "Bonjour serveur !");
 
