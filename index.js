@@ -25,6 +25,7 @@ app.get('/accueil', (req, res) => {
 
 app.get('/game/:id', (req, res) => {
   const id = req.params.id;
+  console.log(id)
   if (id in playerById){
 	res.sendFile(path.join(__dirname, 'public', 'game.html'));
   	console.log(`Client ${playerById[id].name} connecté à la page game`);
