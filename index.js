@@ -23,9 +23,12 @@ app.get('/accueil', (req, res) => {
   console.log("Client connecté à la page accueil");
 });
 
-app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'game.html'));
-  console.log("Client connecté à la page game");
+app.get('/game/:id', (req, res) => {
+  if (id in playerById){
+	res.sendFile(path.join(__dirname, 'public', 'game.html'));
+  	console.log(`Client ${playerById[id].name} connecté à la page game`);
+  } else {res.status(404).send('Erreur 404 : Page non trouvée');
+  console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${req.originalUrl}`);}
 });
 
 app.get('/login', (req, res) => {
@@ -44,12 +47,22 @@ app.use((req, res) => {
 
 io.on("connection", (socket) => {
   console.log("✅ Un client s'est connecté :", socket.id);
-
+  
   socket.on("message", (data) => {
     console.log("📨 Message reçu :", data);
     socket.broadcast.emit("message", data);
   });
 
+  socket.on("verifierNom", (name) => {
+    if (name == null) {
+      socket.emit("erreurNom", "Nom invalide ou déjà utilisé.");
+    } else {
+      const newPlayer = new Joueur("name")
+      const url = `/game/${newPlayer.id}`;
+      socket.emit("nomValide", url);
+    }
+  });
+	
   socket.on("disconnect", () => {
     console.log("❌ Déconnexion :", socket.id);
   });
@@ -97,9 +110,12 @@ class Player {
 		} else {idP = null}
 	}
 	playerByIdP[this.idP] = this;
+	console.log(`nouveau joueur créé || nom : ${this.name}, stack : ${this.stack}, id : ${this.id}, idP (publique) : ${this.idP}`)
+	console.log("bib joueur par id : ", playerById)
+	console.log("bib joueur par idP : ", playerByIdP)
     }
 	
-	receiveCard(card) {
+    receiveCard(card) {
         this.hand.push(card);
     }
 
