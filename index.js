@@ -86,6 +86,12 @@ io.on("connection", (socket) => {
     } else {
       console.log("URL invalide, format attendu /game/:id, connection socket avec un joueur impossible");
     }
+console.log(`bib playerById : `)
+	  // Boucle pour afficher chaque clé et son objet associé
+for (let key in playerById) {
+    if (playerById.hasOwnProperty(key)) {
+        console.log(`${key}: `, playerById[key]);
+    		}}}});
   });
 	
   socket.on("message", (data) => {
