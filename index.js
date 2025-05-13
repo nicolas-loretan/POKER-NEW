@@ -122,7 +122,6 @@ class Player {
 	        if (this.state == "waiting") {
 	            this.state = "playing";
 	    
-	
 	            const btns = [];
 	
 	            if (callAmount == this.raise) {
@@ -136,6 +135,7 @@ class Player {
 	        } else {
 				this.played()
 			}
+		}
 	    });
 	}	
 
