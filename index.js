@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
       if (gameId in playerById) {
         // Emit à ce client pour confirmer l'accès
         playerBySocketId[socket.id] = playerById[gameId];
-	playerById[gameId].socketId 0 gameId     
+	playerById[gameId].socketId = gameId     
       } else {
         console.log(`ID ${gameId} non trouvé, connection socket avec un joueur impossible`);
       }
