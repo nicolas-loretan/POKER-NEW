@@ -46,7 +46,7 @@ app.use((req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("✅ Un client s'est connecté :", socket.id);
+  console.log("✅ Un client s'est connecté au socket :", socket.id);
   
   socket.on("message", (data) => {
     console.log("📨 Message reçu :", data);
