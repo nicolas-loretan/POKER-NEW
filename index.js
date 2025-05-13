@@ -14,12 +14,6 @@ const io = new Server(server, {
   }
 });
 
-// Routes
-app.get('/accueil', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'accueil.html'));
-  console.log("Client connecté à la page accueil");
-});
-
 app.get('/game/:id', (req, res) => {
   const id = req.params.id;
   console.log(id)
@@ -33,10 +27,15 @@ app.get('/game/:id', (req, res) => {
 for (let key in playerById) {
     if (playerById.hasOwnProperty(key)) {
         console.log(`${key}: `, playerById[key]);
-    }
-}
+    		}}}});
 
-	 }
+// Servir les fichiers statiques ( apres les requetes avec url dynamique prcq tu connais)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.get('/accueil', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'accueil.html'));
+  console.log("Client connecté à la page accueil");
 });
 
 app.get('/login', (req, res) => {
@@ -52,10 +51,6 @@ app.use((req, res) => {
   res.status(404).send('Erreur 404 : Page non trouvée');
   console.log(`Requête non reconnue : ${req.originalUrl}`);
 });
-
-
-// Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
   console.log("✅ Un client s'est connecté au socket :", socket.id);
