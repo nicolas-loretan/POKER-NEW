@@ -1,3 +1,7 @@
+console.log("Information:", message);  // log normal
+console.warn("Avertissement:", message);  // log pour les avertissements
+console.error("Erreur:", message);  // log pour les erreurs
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
