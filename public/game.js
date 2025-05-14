@@ -1,3 +1,13 @@
+// ( ! ) GERER LE FAIT QUE QUAND ON ENVOIE PAR EXEMPLE LA CREATION D UN <p> POUR CHAQUE CLIENT,
+//       CERTAINS CLIENTS POURRAIENT SE CONNECTER PAR APRES IL FAUDRA AUSSI LES CONFIGURER
+
+const _allPlayer = document.getElementById("allPlayer")
+const _thisPlayer = document.getElementById("thisPlayer")
+const _mainpot = document.getElementById("mainPot")
+const _infos = document.getElementById("infos")
+const _river = document.getElementById("river")
+const _playForm = document.getElementById("playForm")
+
 const name_face = ["Jack", "Queen", "King", "Ace"];
 const name_color = ["Heart", "Diamond", "Club", "Spade"];
 
@@ -17,7 +27,26 @@ socket.on("demanderUrl", () => {
     socket.emit("reponseUrl", url);
 });
 
+let paragraphByIdP = {}
+let thisParagraph = null
 
+socket.on("otherPlayerBuildPara", (data) => {
+    paragraphByIdP[idP] = document.createElement("p");
+    _allPlayer.appendChild(paragraphByIdP[idP]);
+}
+
+socket.on("thisPlayerBuildPara", () => {
+    thisParagraph = document.createElement("p");
+    _thisPlayer.appendChild(thisParagraph);
+}
+
+socket.on("playerDisplayOf", (data) => {
+    paragraphByIdP[idP].textContent = text
+})
+          
+socket.on("thisPlayerDisplay", (data) => {
+    thisParagraph.textContent = text
+})
 
 
 // Émettre un message
