@@ -51,7 +51,7 @@ app.get('/game/:id', (req, res) => {
 			})
 		}
 	}
-	playerById[id].socket.emit("thisPlayerBuildPara")// creer un <p> pour le joueur
+	playerById[id].socket.socket.emit("thisPlayerBuildPara")// creer un <p> pour le joueur
   } else {res.status(404).send('Erreur 404 : Page non trouvée');
   console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${id}`);
   console.log(`bib playerById : `)
