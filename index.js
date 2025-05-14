@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
     const gameId = extractGameId(url);
     if (gameId) {
       // Vérifier si l'ID existe dans playerById
-      if (gameId in playerById) {
+      if (userBySockets.has(socket)) {
         // Emit à ce client pour confirmer l'accès
 	userBySockets.set(socket, playerById[gameId]);
 	playerById[gameId].socket = socket;
