@@ -216,8 +216,8 @@ class Player {
 	})
     }
 	
-    displayPublic(!(text == null)) {
-	if (text == null){
+    displayPublic() {
+	if (!(text == null)){
 		this.paragraphPubli = text
 	} else {
         this.paragraphPublic = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}`;
@@ -407,4 +407,61 @@ for (let j = 1; j < 5; j++) {
     for (let i = 2; i < 15; i++) {
         deckInit.push([i, j]);
     }
+}
+/*
+// Fonction principale du jeu
+async function gameLoop() {
+  while (gameIsRunning) {
+    console.log("🎲 Nouveau tour de jeu");
+
+    await playOneRound();
+
+    console.log("✅ Tour terminé\n");
+  }
+}
+
+// Fonction asynchrone d'un tour (à personnaliser)
+async function playOneRound() {
+  if (players.length < 2) {
+    console.log("🛑 Pas assez de joueurs. En attente...");
+    // On attend qu'il y ait assez de joueurs avant de continuer
+    await waitForEnoughPlayers();
+    return;
+  }
+
+  // Exemple de début de tour
+  console.log("🃏 Joueurs actuels :", players.map(p => p.name).join(", "));
+
+  // Exécution fictive du tour
+  for (const player of players) {
+    const socket = io.sockets.sockets.get(player.socketId);
+    if (socket) {
+      socket.emit("yourTurn", "C'est ton tour !");
+      await waitForPlayerAction(socket);
+    }
+  }
+
+  console.log("🏁 Fin du tour");
+}
+
+// Attend une action du joueur via un emit "action"
+function waitForPlayerAction(socket) {
+  return new Promise((resolve) => {
+    socket.once("action", (data) => {
+      console.log(`🎯 Action reçue de ${socket.id} :`, data);
+      resolve();
+    });
+  });
+}
+
+// Attend qu'au moins 2 joueurs soient connectés
+function waitForEnoughPlayers() {
+  return new Promise((resolve) => {
+    const interval = setInterval(() => {
+      if (players.length >= 2) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 1000); // Vérifie toutes les secondes
+  });
 }
