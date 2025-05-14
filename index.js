@@ -115,7 +115,7 @@ for (let key in playerById) {
     if (socket in userBySockets) {
 	let p = userBySockets[socket]
 	p.socket = null
-	map.delete(socket);
+	userBySockets.delete(socket);
 
 	
     }
