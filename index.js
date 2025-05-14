@@ -67,7 +67,7 @@ app.use((req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("✅ Un client s'est connecté au socket :", socket.id);
+  console.log("✅ Un client s'est connecté au socket :", socket);
   socket.emit("demanderUrl");
 
   // Attendre la réponse du client
