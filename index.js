@@ -465,3 +465,4 @@ function waitForEnoughPlayers() {
     }, 1000); // Vérifie toutes les secondes
   });
 }
+*/
