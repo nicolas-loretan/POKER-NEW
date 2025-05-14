@@ -78,8 +78,9 @@ io.on("connection", (socket) => {
       // Vérifier si l'ID existe dans playerById
       if (gameId in playerById) {
         // Emit à ce client pour confirmer l'accès
-        playerBySocketId[socket.id] = playerById[gameId];
-	playerById[gameId].socketId = socket.id;     
+	userBySockets.set(socket, playerById[gameId]);
+	playerById[gameId].socket = socket;
+	
       } else {
         console.log(`ID ${gameId} non trouvé, connection socket avec un joueur impossible`);
       }
@@ -110,11 +111,12 @@ for (let key in playerById) {
   });
 	
   socket.on("disconnect", () => {
-    console.log("❌ Déconnexion :", socket.id);
-    if (socket.id in playerBySocketId) {
-	let p = playerBySocketId[socket.id]
-	playerBySocketId[socket.id].socketId = null
-	delete playerBySocketId[socket.id]
+    console.log("❌ Déconnexion :", socket);
+    if (socket in userBySockets) {
+	let p = userBySockets[socket]
+	p.socket = null
+	map.delete(socket);
+
 	
     }
   });
@@ -134,7 +136,7 @@ function generateRandomId() {
 
 let playerById = {}
 let playerByIdP = {} // id public
-let playerBySocketId = {};
+const userBySockets = new Map();
 
 class Player {
     constructor(name, stack = 100) {
@@ -147,7 +149,7 @@ class Player {
 	this.state = "waiting";
 	this.raise = 0;
 
-	this.socketId = null;
+	this.socket = null;
 	let id = null
 	while (id == null){
 		id = generateRandomId()
