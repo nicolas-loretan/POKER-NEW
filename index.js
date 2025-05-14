@@ -1,3 +1,13 @@
+//						      _______   _______   _______   _______   _______   
+//	██████╗  ██████╗ ██╗  ██╗███████╗██████╗     |A      | |K      | |Q      | |J      | |10     |
+//	██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝██╔══██╗    | ♠     | | ♥     | | ♦     | | ♣     | | ♠     |
+//	██████╔╝██║   ██║█████╔╝ █████╗  ██████╔╝    |       | |       | |       | |       | |       |
+//	██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██╔══██╗    |   ♠   | |   ♥   | |   ♦   | |   ♣   | |   ♠   |
+//	██║     ╚██████╔╝██║  ██╗███████╗██║  ██║    |       | |       | |       | |       | |       |
+//	╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    |     ♠ | |     ♥ | |     ♦ | |     ♣ | |     ♠ |
+//						     |______A| |______K| |______Q| |______J| |_____10|
+
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -34,6 +44,14 @@ app.get('/game/:id', (req, res) => {
   if (id in playerById){
 	res.sendFile(path.join(__dirname, 'public', 'game.html'));
   	console.log(`Client ${playerById[id].name} se connecte à la page game`);
+	for (let key of userBySockets.keys()) {
+  		if (!(key == playerById[id].socket)) { // creer un <p> pour chaque joueur autre que ce joueur
+			playerById[id].socket.emit("otherPlayerBuildPara", {
+				idP : userBySockets.get(key).idP,
+			})
+		}
+	}
+	playerById[id].socket.emit("thisPlayerBuildPara")// creer un <p> pour le joueur
   } else {res.status(404).send('Erreur 404 : Page non trouvée');
   console.log(`Utilisateur à tenté d'acceder a une page game avec une id non reeconnu : ${id}`);
   console.log(`bib playerById : `)
@@ -167,6 +185,8 @@ class Player {
 		} else {idP = null}
 	}
 	playerByIdP[this.idP] = this;
+
+	// 
 	console.log(`nouveau joueur créé || nom : ${this.name}, stack : ${this.stack}, id : ${this.id}, idP (publique) : ${this.idP}`)
 	console.log("bib joueur par id : ", playerById)
 	console.log("bib joueur par idP : ", playerByIdP)
@@ -181,14 +201,29 @@ class Player {
         this.best = null;
     }
 
-    display() {
-        this.paragraph = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}, Cartes: ${this.hand.map(formatCard).join(" | ")}`;
+    display(text = null) {
+	if (!(text == null)){
+		this.paragraph = text
+	} else {
+		 this.paragraph = `Nom: ${this.name}, 
+   Score: ${this.stack - this.raise}, 
+   Mise Totale : ${this.raise}, State : ${this.state}, 
+   Cartes: ${this.hand.map(formatCard).join(" | ")}`;
+	}
+       
+    	this.socket.emit("thisPlayerDisplay", {
+			 text : this.paragraph
+	})
     }
 	
-    displayPublic() {
+    displayPublic(!(text = null)) {
+	if (text == null){
+		this.paragraphPubli = text
+	} else {
         this.paragraphPublic = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}`;
+	}
 	for (let key of userBySockets.keys()) {
-  		if (!(key = this.socket)) {
+  		if (!(key == this.socket)) {
 			key.socket.emit("playerDisplayOf", {
 				idP : this.idP,
 				text : this.paragraphPublic
