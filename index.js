@@ -216,7 +216,7 @@ class Player {
 	})
     }
 	
-    displayPublic(!(text = null)) {
+    displayPublic(!(text == null)) {
 	if (text == null){
 		this.paragraphPubli = text
 	} else {
