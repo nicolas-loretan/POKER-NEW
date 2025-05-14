@@ -113,7 +113,7 @@ for (let key in playerById) {
   socket.on("disconnect", () => {
     console.log("❌ Déconnexion :", socket.id);
     if (userBySockets.has(socket)) {
-	let p = userBySockets[socket]
+	let p = userBySockets.get(socket);
 	p.socket = null
 	userBySockets.delete(socket);
 
