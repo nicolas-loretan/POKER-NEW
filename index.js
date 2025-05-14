@@ -182,11 +182,19 @@ class Player {
     }
 
     display() {
-        this.paragraphPublic = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}, Cartes: ${this.hand.map(formatCard).join(" | ")}`;
+        this.paragraph = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}, Cartes: ${this.hand.map(formatCard).join(" | ")}`;
     }
 	
     displayPublic() {
-        this.paragraph = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}`;
+        this.paragraphPublic = `Nom: ${this.name}, Score: ${this.stack - this.raise}, Mise Totale : ${this.raise}, State : ${this.state}`;
+	for (let key of userBySockets.keys()) {
+  		if (!(key = this.socket)) {
+			key.socket.emit("playerDisplayOf", {
+				idP : this.idP,
+				text : this.paragraphPublic
+			})
+		}
+	}
     }
 	
 	play() {
