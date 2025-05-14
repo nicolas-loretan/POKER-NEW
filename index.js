@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
     const gameId = extractGameId(url);
     if (gameId) {
       // Vérifier si l'ID existe dans playerById
-      if (userBySockets.has(socket)) {
+      if (gameId in playerById) {
         // Emit à ce client pour confirmer l'accès
 	userBySockets.set(socket, playerById[gameId]);
 	playerById[gameId].socket = socket;
@@ -112,7 +112,7 @@ for (let key in playerById) {
 	
   socket.on("disconnect", () => {
     console.log("❌ Déconnexion :", socket.id);
-    if (socket in userBySockets) {
+    if (userbySockets.has(socket)) {
 	let p = userBySockets[socket]
 	p.socket = null
 	userBySockets.delete(socket);
