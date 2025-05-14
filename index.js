@@ -67,7 +67,7 @@ app.use((req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("✅ Un client s'est connecté au socket :", socket);
+  console.log("✅ Un client s'est connecté au socket :", socket.id);
   socket.emit("demanderUrl");
 
   // Attendre la réponse du client
@@ -102,7 +102,7 @@ for (let key in playerById) {
 
   socket.on("verifierNom", (name) => {
     if (name == null) {
-      socket.emit("erreurNom", "Nom invalide ou déjà utilisé.");
+      socket.emit("erreurNom", "Nom invalide");
     } else {
       const newPlayer = new Player(name)
       const url = `/game/${newPlayer.id}`;
@@ -111,7 +111,7 @@ for (let key in playerById) {
   });
 	
   socket.on("disconnect", () => {
-    console.log("❌ Déconnexion :", socket);
+    console.log("❌ Déconnexion :", socket.id);
     if (socket in userBySockets) {
 	let p = userBySockets[socket]
 	p.socket = null
